@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1c1917">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Grocery">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="description" content="First tap: in the cart. Second tap: you actually have it.">
+  <title>Two-stage grocery list</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <h1>Two-stage grocery list</h1>
+  <p class="sub">First tap puts it in the cart. Second tap means you actually have it. Nothing vanishes early.</p>
+
+  <div class="banner" id="corrupt" hidden>
+    <p>Saved list could not be read. It is still in this browser and has not been overwritten.</p>
+    <button type="button" class="warn" id="reset-list">Reset list</button>
+  </div>
+
+  <div class="banner install" id="install">
+    <div>
+      <strong>Add to Home Screen</strong>
+      <p class="hint" style="margin:0.2rem 0 0;color:var(--muted);font-size:0.85rem" id="install-copy">Use the browser menu so this list works like an app, including offline.</p>
+      <p class="hint" id="install-help" hidden style="margin:0.35rem 0 0;color:var(--muted);font-size:0.85rem">iPhone: Share → Add to Home Screen. Android: browser menu → Install app or Add to Home Screen.</p>
+    </div>
+    <button type="button" id="install-btn">How</button>
+    <button type="button" class="icon" id="install-dismiss" aria-label="Dismiss">×</button>
+  </div>
+
+  <form class="add" id="add-form">
+    <input id="name" name="name" autocomplete="off" enterkeyhint="done" placeholder="Add an item" required>
+    <button type="submit">Add</button>
+    <div class="row">
+      <input id="qty" name="qty" autocomplete="off" placeholder="Qty (optional)">
+      <input id="aisle" name="aisle" autocomplete="off" placeholder="Aisle (optional)">
+    </div>
+  </form>
+
+  <h2 class="stage">To get <span class="count" id="todo-count" hidden></span></h2>
+  <ul class="list" id="todo-list"></ul>
+  <p class="empty" id="todo-empty">Nothing to get yet.</p>
+
+  <h2 class="stage">In the cart <span class="count" id="cart-count" hidden></span></h2>
+  <ul class="list" id="cart-list"></ul>
+  <p class="empty" id="cart-empty">Cart is empty. Tap an item when you pick it up.</p>
+
+  <h2 class="stage">Got it <span class="count" id="bought-count" hidden></span></h2>
+  <ul class="list" id="bought-list"></ul>
+  <p class="empty" id="bought-empty">Bought items land here until you start a new shop.</p>
+
+  <div class="bar">
+    <button class="ghost" id="undo" type="button" disabled>Undo</button>
+    <button class="ghost" id="new-shop" type="button" disabled>New shop</button>
+  </div>
+
+  <dialog id="edit-dialog">
+    <form id="edit-form">
+      <h3>Edit item</h3>
+      <input id="edit-name" required placeholder="Item">
+      <div class="row" style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;margin-top:0.4rem">
+        <input id="edit-qty" placeholder="Qty">
+        <input id="edit-aisle" placeholder="Aisle">
+      </div>
+      <menu>
+        <button class="ghost" type="button" id="edit-cancel">Cancel</button>
+        <button type="submit">Save</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <dialog class="sheet" id="sheet">
+    <h3 id="sheet-title">Item</h3>
+    <div class="sheet-actions">
+      <button class="ghost" type="button" id="sheet-up">Move up</button>
+      <button class="ghost" type="button" id="sheet-down">Move down</button>
+      <button class="ghost" type="button" id="sheet-edit">Edit</button>
+      <button class="warn" type="button" id="sheet-del">Delete</button>
+      <button class="ghost" type="button" id="sheet-cancel">Cancel</button>
+    </div>
+  </dialog>
+
+  <dialog id="confirm-dialog">
+    <h3 id="confirm-title">Confirm</h3>
+    <p class="hint" id="confirm-body"></p>
+    <menu>
+      <button class="ghost" type="button" id="confirm-cancel">Cancel</button>
+      <button type="button" id="confirm-ok">OK</button>
+    </menu>
+  </dialog>
+
+  <p class="sr-only" id="live" aria-live="polite"></p>
+  <script src="./grocery.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
