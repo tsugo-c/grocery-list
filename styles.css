@@ -1,0 +1,342 @@
+:root {
+  --bg: #f4efe6;
+  --ink: #1c1917;
+  --muted: #57534e;
+  --card: #fffdf8;
+  --line: #e7e0d4;
+  --todo: #0f766e;
+  --cart: #b45309;
+  --got: #44403c;
+  --danger: #b91c1c;
+  --shadow: 0 1px 2px rgba(28, 25, 23, 0.06);
+  --radius: 0.9rem;
+  --tap: 2.75rem;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 17px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+body {
+  max-width: 28rem;
+  margin: 0 auto;
+  padding: 0.75rem 0.75rem calc(5.75rem + env(safe-area-inset-bottom));
+  min-height: 100dvh;
+}
+
+h1 {
+  font-size: 1.15rem;
+  margin: 0.35rem 0 0.35rem;
+  letter-spacing: -0.02em;
+}
+
+.sub {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin: 0 0 1rem;
+}
+
+form.add {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.4rem;
+  margin-bottom: 0.35rem;
+}
+
+form.add .row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+
+input, button, select {
+  font: inherit;
+  border-radius: 0.7rem;
+  border: 1px solid var(--line);
+  padding: 0.7rem 0.8rem;
+}
+
+input {
+  background: var(--card);
+  color: var(--ink);
+  width: 100%;
+}
+
+input:focus, button:focus-visible {
+  outline: 2px solid var(--todo);
+  outline-offset: 2px;
+}
+
+button {
+  background: var(--ink);
+  color: #fafaf9;
+  font-weight: 650;
+  min-height: var(--tap);
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+button.ghost {
+  background: var(--card);
+  color: var(--ink);
+}
+
+button.warn {
+  background: var(--danger);
+  color: #fff;
+  border-color: var(--danger);
+}
+
+button:disabled { opacity: 0.4; }
+
+button.icon {
+  min-width: var(--tap);
+  min-height: var(--tap);
+  padding: 0;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border-color: transparent;
+  color: var(--muted);
+}
+
+button.icon:focus-visible { outline-offset: 0; }
+
+h2.stage {
+  font-size: 0.78rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 1.15rem 0 0.45rem;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--bg);
+  padding: 0.35rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.count {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 0.75rem;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.05rem 0.45rem;
+}
+
+ul.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+li.aisle {
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0.35rem 0.15rem 0.05rem;
+}
+
+li.item {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.35rem 0.4rem 0.35rem 0.2rem;
+  display: grid;
+  grid-template-columns: var(--tap) 1fr auto;
+  gap: 0.15rem 0.35rem;
+  align-items: center;
+  box-shadow: var(--shadow);
+  min-height: 3.4rem;
+}
+
+li.item.todo { border-left: 4px solid var(--todo); }
+li.item.cart { border-left: 4px solid var(--cart); }
+li.item.bought { border-left: 4px solid var(--got); }
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 2.6rem;
+  min-width: 0;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  padding: 0.35rem 0.15rem;
+  color: inherit;
+  font-weight: 400;
+  border-radius: 0.55rem;
+}
+
+.main:focus-visible { outline-offset: 0; }
+
+.name {
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.advance {
+  background: var(--todo);
+  border-color: transparent;
+  min-width: 5.6rem;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.92rem;
+}
+
+li.cart .advance { background: var(--cart); }
+li.bought .advance {
+  background: var(--card);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.empty {
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding: 0.25rem 0.1rem 0.15rem;
+}
+
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-width: 28rem;
+  margin: 0 auto;
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  padding: 0.55rem 0.75rem calc(0.55rem + env(safe-area-inset-bottom));
+  display: flex;
+  gap: 0.4rem;
+  z-index: 5;
+}
+
+.bar button { flex: 1; }
+
+dialog {
+  border: 0;
+  border-radius: 1rem;
+  padding: 1rem;
+  width: min(22rem, calc(100% - 2rem));
+  background: var(--card);
+  color: var(--ink);
+}
+
+dialog::backdrop { background: rgba(28, 25, 23, 0.45); }
+
+dialog h3 {
+  margin: 0 0 0.7rem;
+  font-size: 1.05rem;
+}
+
+dialog .hint {
+  margin: -0.35rem 0 0.8rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+dialog menu {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: flex-end;
+  padding: 0;
+  margin: 0.85rem 0 0;
+}
+
+dialog menu button { min-width: 5.2rem; }
+
+dialog.sheet {
+  margin: auto 0 0;
+  width: min(28rem, 100%);
+  max-width: 100%;
+  border-radius: 1rem 1rem 0 0;
+  padding: 0.7rem 0.7rem calc(0.7rem + env(safe-area-inset-bottom));
+}
+
+dialog.sheet .sheet-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+dialog.sheet .sheet-actions button {
+  width: 100%;
+  justify-content: center;
+}
+
+.banner {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.7rem 0.8rem;
+  margin: 0 0 0.8rem;
+  font-size: 0.9rem;
+}
+
+.banner p { margin: 0 0 0.5rem; }
+
+.install {
+  display: none;
+  align-items: flex-start;
+  gap: 0.55rem;
+}
+
+.install.show { display: flex; }
+
+.install button.icon { margin-left: auto; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1917;
+    --ink: #f5f0e8;
+    --muted: #a8a29e;
+    --card: #292524;
+    --line: #44403c;
+    --shadow: none;
+  }
+
+  button.ghost { background: #35302c; }
+  li.bought .advance { background: #35302c; color: var(--ink); }
+  .bar { background: #1c1917; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
+}
